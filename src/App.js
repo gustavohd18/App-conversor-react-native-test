@@ -1,25 +1,25 @@
 
 import React, {Component} from 'react';
-import {TextInput, StyleSheet, Text, View,Button,CheckBox} from 'react-native';
+import {TextInput,Text, View,Button,CheckBox} from 'react-native';
 import conversor from './model/Conversor'
-
+import styles from './estilos/AppEstilo'
 export default class App extends Component {
 
   state = {
     numero: 0,
     numeroExibi: 'Aqui ira ser exibido o numero',
-    checked: false,
-    checked2: false,
+    checkedBi: false,
+    checkedHe: false,
   }
   
 
   alterarNumero  = () => {
     let numeroTest = Number(this.state.numero)// garantindo que estou convertendo para numero
-    if (this.state.checked) {
+    if (this.state.checkedBi) {
       let numero = conversor.conversorBinario(numeroTest)
       this.setState({numero:numero})
       this.setState({numeroExibi:numero})
-    } else if (this.state.checked2) {
+    } else if (this.state.checkedHe) {
       let numero = conversor.conversorHexadecimal(numeroTest)
       this.setState({numero:numero})
       this.setState({numeroExibi:numero})
@@ -28,30 +28,31 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{flex: 1, backgroundColor: '#612F74'}}>
-            <Text style={styles.welcome}>Welcome Conversor 1.0!</Text>
+        <View style={styles.header}>
+            <Text style={styles.welcome}>Bem vindo ao Conversor Versão Beta!</Text>
         </View>
-        <View style={{flex: 8, backgroundColor: 'white'}}>
+        <View style={styles.content}>
           <Text style={{textAlign: 'center',fontSize: 30}}>{this.state.numeroExibi}</Text>
           <TextInput 
-          style={{textAlign: 'center',fontSize: 30}}
+          style={styles.input}
           placeholder= 'Digite o numero'
-                  onChangeText={(numero) => this.setState({numero:numero})}></TextInput>
-          <View style={{ flexDirection: 'row',justifyContent:'center'}}>
+          onChangeText={(numero) => this.setState({numero:numero})}>  
+          </TextInput>
+          <View style={styles.viewCheck}>
               <CheckBox
-              style={{alignItems: 'center' }}
+              style={styles.check}
                 value={this.state.checked}
-                onValueChange={() => this.setState({ checked: !this.state.checked })}
+                onValueChange={() => this.setState({ checkedBi: !this.state.checkedBi })}
               />
-              <Text style={{marginTop: 5}}>Binario</Text>
+              <Text style={styles.textView}>Binario</Text>
               <CheckBox
-              style={{ alignItems: 'center' }}
+              style={styles.check}
                 value={this.state.checked2}
-                onValueChange={() => this.setState({ checked2: !this.state.checked2 })}
+                onValueChange={() => this.setState({ checkedHe: !this.state.checkedHe })}
               />
-              <Text style={{marginTop: 5}}>Hexadecimal</Text>
+              <Text style={styles.textView}>Hexadecimal</Text>
             </View>
-            <View style={{ flexDirection: 'row',justifyContent:'center',paddingTop: 80}}>
+            <View style={styles.buttonView}>
                <Button onPress={this.alterarNumero} title="Converter" ></Button>
             </View>
         </View>
@@ -60,19 +61,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#612F74',
-    
-  },
-  welcome: {
-    flex:1,
-    fontSize: 20,
-    textAlign: 'center',
-    color: 'white',
-    paddingTop:15,
-  },
-
-});
