@@ -15,15 +15,21 @@ export default class App extends Component {
 
   alterarNumero  = () => {
     let numeroTest = Number(this.state.numero)// garantindo que estou convertendo para numero
-    if (this.state.checkedBi) {
+    if (this.state.checkedBi && this.state.checkedHe == false) {
       let numero = conversor.conversorBinario(numeroTest)
       this.setState({numero:numero})
       this.setState({numeroExibi:numero})
-    } else if (this.state.checkedHe) {
+    } 
+    if (this.state.checkedHe && this.state.checkedBi == false) {
       let numero = conversor.conversorHexadecimal(numeroTest)
       this.setState({numero:numero})
       this.setState({numeroExibi:numero})
-    }    
+    }  
+    if ((this.state.checkedBi && this.state.checkedHe)) {
+      this.setState({numero:0})
+      this.setState({numeroExibi:'Não é possivel converter'})
+    }
+
   }
   render() {
     return (
@@ -41,13 +47,13 @@ export default class App extends Component {
           <View style={styles.viewCheck}>
               <CheckBox
               style={styles.check}
-                value={this.state.checked}
+                value={this.state.checkedBi}
                 onValueChange={() => this.setState({ checkedBi: !this.state.checkedBi })}
               />
               <Text style={styles.textView}>Binario</Text>
               <CheckBox
               style={styles.check}
-                value={this.state.checked2}
+                value={this.state.checkedHe}
                 onValueChange={() => this.setState({ checkedHe: !this.state.checkedHe })}
               />
               <Text style={styles.textView}>Hexadecimal</Text>
